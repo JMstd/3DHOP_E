@@ -1,0 +1,71 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<!--<meta content="charset=UTF-8"/> -->
+		<!-- ho dovuto aggiungere le due righe qui sotto per togliere il messaggio di errore sulla codifica di html -->
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<!--questa seconda linea non e' essenziale-->
+		<meta content="utf-8" http-equiv="encoding">
+		
+		<title>3DHOP - 3D Heritage Online Presenter</title>
+		<style type="text/css">a:hover {color:gray; cursor:pointer;}</style>
+		<!--STYLESHEET-->
+		<link type="text/css" rel="stylesheet" href="stylesheet/3dhop.css"/>  
+		<link type="text/css" rel="stylesheet" href="stylesheet/light.css"/>
+		<!--SPIDERGL-->
+		<script type="text/javascript" src="js/spidergl.js"></script>
+		<!--JQUERY-->
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<!--PRESENTER-->
+		<script type="text/javascript" src="js/presenter.js"></script>
+		<!--3D MODELS LOADING AND RENDERING-->
+		<script type="text/javascript" src="js/nexus.js"></script>
+		<script type="text/javascript" src="js/ply.js"></script>
+		<!--TRACKBALLS-->
+		<script type="text/javascript" src="js/trackball_sphere.js"></script>
+		<script type="text/javascript" src="js/trackball_turntable.js"></script>
+		<script type="text/javascript" src="js/trackball_turntable_pan.js"></script>
+		<script type="text/javascript" src="js/trackball_pantilt.js"></script>
+		<!--UTILITY-->
+		<script type="text/javascript" src="js/init.js"></script>
+
+		<script type="text/javascript" src="R1.js"></script>
+	</head>
+	<body>
+
+		<div id="3dhop" class="tdhop" onmousedown="if (event.preventDefault) event.preventDefault()">
+
+			<div id="tdhlg"></div>
+<!-- Questa parte gestisce i vari tolbar, al momento io la lascerei cosi. rimane all'interno dello spazio del visualizzarote, poi si puo vedere se metterli in una zona esterna -->
+			<div id="toolbar">
+				<img id="home"         title="Home"                  src="skins/dark/home.png"            /><br/>
+				<img id="zoomin"       title="Zoom In"               src="skins/dark/zoomin.png"          /><br/>
+				<img id="zoomout"      title="Zoom Out"              src="skins/dark/zoomout.png"         /><br/>
+				<img id="lighting_off" title="Enable Lighting"       src="skins/dark/lighting_off.png"    style="position:absolute; visibility:hidden;"/>
+				<img id="lighting"     title="Disable Lighting"      src="skins/dark/lighting.png"        /><br/>
+				<img id="light_on"     title="Disable Light Control" src="skins/dark/lightcontrol_on.png" style="position:absolute; visibility:hidden;"/>
+				<img id="light"        title="Enable Light Control"  src="skins/dark/lightcontrol.png"    /><br/>
+				<img id="perspective"  title="Perspective Camera"    src="skins/dark/perspective.png"     style="position:absolute; visibility:hidden;"/>
+				<img id="orthographic" title="Orthographic Camera"   src="skins/dark/orthographic.png"    /><br/>
+				<img id="hotspot_on" title="Hide Hotspots"         src="skins/dark/pin_on.png"          style="position:absolute; visibility:hidden;"/>
+				<img id="hotspot"    title="Show Hotspots"         src="skins/dark/pin.png"             /><br/>
+				<img id="measure_on" title="Disable Measure Tool"  src="skins/dark/measure_on.png"      style="position:absolute; visibility:hidden;"/>
+				<img id="measure"    title="Enable Measure Tool"   src="skins/dark/measure.png"         /><br/>
+				<img id="full_on"      title="Exit Full Screen"      src="skins/dark/full_on.png"         style="position:absolute; visibility:hidden;"/>
+				<img id="full"         title="Full Screen"           src="skins/dark/full.png"            />
+			</div>
+
+			<div id="lightcontroller">
+				<canvas id="lightcontroller_canvas" width="125" height="125" />
+			</div>
+
+			<div id="measure-box" class="output-box">Measured length<hr/>
+				<span id="measure-output" class="output-text" onmousedown="event.stopPropagation()">0.0</span>
+			</div>
+<!--questa parte crea effetivamente il canvas, ed e' la parte importante per la visualizzazione del modello. Questo deve esserci per forze nell'integrazione che farai  -->
+			<canvas id="draw-canvas" style="background-image: url(skins/backgrounds/light.jpg)"/>
+		</div> 
+<!--al momento il controller della luce funziona come js ma va tutto sistemato. Va tolto di li e messo in un file js separato oppure lo lascio cosi com'e'-->
+
+	</body>
+</html>

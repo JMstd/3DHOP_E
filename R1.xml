@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- tutti i tag sono stati fatti per comodita' nella fase di test, vanno poi sostituiti con quelli TEI scelti insieme -->
+<MODELS>
+  <MODEL>
+      <NAME>bewcastle.nxz</NAME> <!-- mesh name -->
+      <URL>/multires/bewcastle.nxz</URL> <!-- mesh url name of model -->
+      <MODELISTANCE>BWC</MODELISTANCE> <!-- name of model istance --> 
+
+      <NAME>Cube</NAME> <!-- mesh name 2-->
+      <URL>/singleres/cube.ply</URL> <!-- mesh url name of model 2-->
+      
+	  <NAME>Sphere</NAME> <!-- mesh name 2-->
+      <URL>/singleres/sphere.ply</URL> <!-- mesh url name of model 2-->
+
+      <DESCRIPTION>Qui dentro ci va la descrizione dell'intero modello, oppure del singolo hotspot</DESCRIPTION>
+      
+      <TRACKBALL> 
+        
+        <START>1.10</START>
+        
+        <MIN0>0.1</MIN0>
+        <MIN1>3.0</MIN1>
+
+        <MAX0>0.0</MAX0>
+<!--
+        <START>1.10</START>
+        
+        <MIN0>0.1</MIN0>
+        <MIN1>3.0</MIN1>
+
+        <MAX0>0.0</MAX0>
+-->
+        <!--<MAX1>100.0</MAX1>-->
+     
+      </TRACKBALL>
+
+      <HOME0>0.0</HOME0>
+      <HOME1>0.0</HOME1>
+      <HOME2>3.0</HOME2>
+  </MODEL>
+ <!-- <MODEL>
+      <NAME>"Gargoyle"</NAME>
+      <URL>"models/multires/gargo.nxz"</URL>
+      <MODELISTANCE>Gargo</MODELISTANCE>
+      <DESCRIPTION>Qui dentro ci va la descrizione dell'intero modello, oppure del singolo hotspot</DESCRIPTION>
+      <TRACKBALL> 
+        
+        <START>20.0</START>
+        
+        <MIN0>1.5</MIN0>
+        <MIN1>3.0</MIN1>
+
+        <MAX0>-10.0</MAX0>
+        <MAX1>-10.0</MAX1>
+     
+      </TRACKBALL>
+
+      <HOME>1</HOME>
+      <HOME class="secondo_home">2</HOME>
+      <HOME>3</HOME>
+  </MODEL>
+ -->
+</MODELS>
