@@ -3,10 +3,10 @@ var start="1.10";
 var name;
 var myurl;
 var mdI;
-var stMin0="1.5";
-var stMin1="3.0";
-var stMax0="3.0";
-var stMax1="3.0";
+var stMinD="1.5";
+var stMaxD="3.0";
+var stMinT="-80.0";
+var stMaxT="80.0";
 
 /***************************** start function that generates XMLDOM *******************************************/
 var xhttp = new XMLHttpRequest();
@@ -224,9 +224,12 @@ var myScene;
 	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
 	myscene.trackball = { type : TurnTableTrackball };
 	myscene.trackball.trackOptions = {
+        									startPhi: 0.0,
+								        	startTheta: 0.0,
         								startDistance : start,
-							 			minMaxDist    : "["+stMin0+", "+stMin1+"]",
-							 			minMaxTheta   : "["+stMax0+", "+stMax1+"]"
+								        	minMaxPhi: [-180, 180],
+							 			minMaxTheta   : "["+stMinT+", "+stMaxT+"]",
+							 			minMaxDist    : "["+stMinD+", "+stMaxD+"]"
 									};
 	myscene.space = {// tutta questa parte si puo mettere in xml, almeno la patrte con i parametri della camera secondo me vanno messi in xml
 						centerMode       : "scene",
