@@ -1,12 +1,12 @@
 
 var start="1.10";
-var name="bewcastle.nxz";
-var myurl="/multires/bewcastle.nxz";
+var name;
+var myurl;
 var mdI="BWC";
 var stMin0="1.5";
 var stMin1="3.0";
-var stMax0="1.0";
-var stMax1="1.0";
+var stMax0="3.0";
+var stMax1="3.0";
 
 /***************************** start function that generates XMLDOM *******************************************/
 var xhttp = new XMLHttpRequest();
@@ -15,9 +15,27 @@ xhttp.onreadystatechange = function() {
        myFunction(this);
    }
 };
+
 xhttp.open("GET", "R1.xml", true);
 xhttp.send();
+
 /****************************** end function that generates XMLDOM ******************************************/
+
+/************************************************************************/
+//start menagement of XML nodes 
+function myFunction(xml) {
+    var xmlDoc = xml.responseXML;
+
+    var x = xmlDoc.getElementsByTagName("NAME")[0];
+    var y = x.childNodes[0];
+    name = y.nodeValue;
+
+    var x = xmlDoc.getElementsByTagName("URL")[0];
+    var y = x.childNodes[0];
+    myurl = y.nodeValue;
+} 
+//end menagement of XML nodes 
+/************************************************************************/
 
 function actionsToolbar(action) {
 	//if(action=='home') presenter.setTrackballPosition([ w0, w1, w2]);
@@ -164,19 +182,8 @@ HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 // end lightControler functions ************************************************************************************************************
 
 
-/************************************************************************/
-//start menagement of XML nodes 
-function myFunction(xml) {
-    var xmlDoc = xml.responseXML;
-    
-    var x = xmlDoc.getElementsByTagName("NAME")[0];
-    var y = x.childNodes[0];
-    name = y.nodeValue;
-} 
-//end menagement of XML nodes 
-/************************************************************************/
 
-//start hotspots f(richiamato sopra)
+//start hotspots f()
 function onPickedSpot(id) {
   switch(id) {
      case 'Select'   : alert("Select Hotspot Clicked"); break;
@@ -207,22 +214,16 @@ var myScene;
 	};
 
 //*******************************************************inizio passaggio da xml *************************
-/*
-    myscene.meshes[name] = { url : "models/multires/"+myurl };
-    myscene.meshes[name1] = { url : "models/singleres/"+myurl1 };
-    myscene.meshes[name2] = { url : "models"+myurl2 };
-*/
     //	myscene.meshes[name[0]] = { url : "models"+myurl };
 	myscene.meshes[name] = { url : "models"+myurl };
 	myscene.modelInstances[mdI] = { mesh : name };
-	myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
+	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
 	myscene.trackball = { type : TurnTableTrackball };
 	myscene.trackball.trackOptions = {
         								startDistance : start,
 							 			minMaxDist    : "["+stMin0+", "+stMin1+"]",
 							 			minMaxTheta   : "["+stMax0+", "+stMax1+"]"
 									};
-
 	myscene.space = {// tutta questa parte si puo mettere in xml, almeno la patrte con i parametri della camera secondo me vanno messi in xml
 						centerMode       : "scene",
 						radiusMode       : "scene",
@@ -233,7 +234,7 @@ var myScene;
 					};
 //******************************************************fine passaggio da xml**************************
 
-// da usare soloquando i parametri sono passati da xml; assegna i valori di myscene a presenter
+//assegna i valori di myscene a presenter
 	presenter.setScene(myscene);
 
 /*inizio hotspots (il resto del codice aggiunto e' spots sopra)*/
@@ -243,10 +244,9 @@ var myScene;
 /*	
 	presenter._onPickedInstance = onPickedInstance;
 */
-
 /*fine hotspots*/
-	presenter._onEndMeasurement = onEndMeasure;
 
+	presenter._onEndMeasurement = onEndMeasure;
 }
 
 $(document).ready(function(){
