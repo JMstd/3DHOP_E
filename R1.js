@@ -2,7 +2,7 @@
 var start="1.10";
 var name;
 var myurl;
-var mdI="BWC";
+var mdI;
 var stMin0="1.5";
 var stMin1="3.0";
 var stMax0="3.0";
@@ -33,6 +33,10 @@ function myFunction(xml) {
     var x = xmlDoc.getElementsByTagName("URL")[0];
     var y = x.childNodes[0];
     myurl = y.nodeValue;
+
+    var x = xmlDoc.getElementsByTagName("MODELISTANCE")[0];
+    var y = x.childNodes[0];
+    mdI = y.nodeValue;
 } 
 //end menagement of XML nodes 
 /************************************************************************/
