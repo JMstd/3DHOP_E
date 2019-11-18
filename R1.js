@@ -16,7 +16,8 @@ xhttp.onreadystatechange = function() {
    }
 };
 
-xhttp.open("GET", "R1.xml", true);
+
+xhttp.open("GET", "R1.xml", false);
 xhttp.send();
 
 /****************************** end function that generates XMLDOM ******************************************/

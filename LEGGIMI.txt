@@ -2,9 +2,9 @@ PROBLEMI:
 	
 	1) al momento attuale facendo zoom in negativo da home, mi avvicina leggermente	
 	
-	2) i valori non vengono correttamente passati da xml a js. Vengono apssati ma non in tempo per poter caricare correttamente la pagina. Cambiando il valore da "true" a "false" in xhttp.open(), diventando cosi' asincrono, funziona, ma questa pratica e' deprecata. 
+	2) i valori non vengono correttamente passati da xml a js. Vengono pssati ma non in tempo per poter caricare correttamente la pagina. Cambiando il valore da "true" a "false" in xhttp.open(), diventando cosi' sincorno, funziona, ma questa pratica e' deprecata. 
 
-	3) il controller della luce non e' resposive
+	3) il controller della luce non e' resposive, inoltre non e' totalmente soncronizzato con Lightning 
 
 	4) sono assenti le freccette per andare su e giu' una volta fatto zoom 
 
@@ -12,4 +12,4 @@ PROBLEMI:
 
 VALUTAZIONI: 
 
-	al cambiare dei valori di minMaxDist in [0.2, 4.0] (che sono i valori predefiniti) lo zoom smette di funzionare correttamente. per questo i valori attuali sono [1.5, 3.0]  
+	al cambiare dei valori di minMaxDist in [0.2, 4.0] (che sono i valori nell'esempio online) lo zoom smette di funzionare correttamente. per questo i valori attuali sono [1.5, 3.0]  
