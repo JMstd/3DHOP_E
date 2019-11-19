@@ -16,10 +16,8 @@ xhttp.onreadystatechange = function() {
    }
 };
 
-
-xhttp.open("GET", "R1.xml", false);
+xhttp.open("GET", "R1.xml", true);
 xhttp.send();
-
 /****************************** end function that generates XMLDOM ******************************************/
 
 /************************************************************************/
@@ -206,7 +204,6 @@ function onEndMeasure(measure) {
 var presenter = null;
 
 function setup3dhop() { 
-
 presenter = new Presenter("draw-canvas");
 
 var myScene;
@@ -276,7 +273,9 @@ $(document).ready(function(){
 //*******************************************************************
 	update_lightcontroller(-0.17,-0.17);	
 //---------------------------------------------------------------------------------------------
+	
 	init3dhop();
+
 });
 // onload occurs when all content has been loaded 
 window.onload = setup3dhop;
