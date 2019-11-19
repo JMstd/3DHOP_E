@@ -8,17 +8,19 @@ var stMaxD="3.0";
 var stMinT="-80.0";
 var stMaxT="80.0";
 
-/***************************** start function that generates XMLDOM *******************************************/
 var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-   if (this.readyState == 4 && this.status == 200) {
-       myFunction(this);
-   }
-};
+function parser(){
+/***************************** start function that generates XMLDOM *******************************************/
+	xhttp.onreadystatechange = function() {
+	   if (this.readyState == 4 && this.status == 200) {
+	       myFunction(this);
+	   }
+	};
 
-xhttp.open("GET", "R1.xml", true);
-xhttp.send();
+	xhttp.open("GET", "R1.xml", true);
+	xhttp.send();
 /****************************** end function that generates XMLDOM ******************************************/
+}
 
 /************************************************************************/
 //start menagement of XML nodes 
@@ -254,6 +256,11 @@ var myScene;
 	presenter._onEndMeasurement = onEndMeasure;
 }
 
+function unisci() {
+	parser();
+	setup3dhop();
+}
+
 $(document).ready(function(){
 	//resizeCanvas(800,600); 
 	//---------------------------------------------------------------------------------------------
@@ -273,9 +280,10 @@ $(document).ready(function(){
 //*******************************************************************
 	update_lightcontroller(-0.17,-0.17);	
 //---------------------------------------------------------------------------------------------
-	
 	init3dhop();
+
+	unisci();
 
 });
 // onload occurs when all content has been loaded 
-window.onload = setup3dhop;
+
