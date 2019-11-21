@@ -8,9 +8,9 @@ var stMaxD="3.0";
 var stMinT="-80.0";
 var stMaxT="80.0";
 
-var xhttp = new XMLHttpRequest();
 function parser(){
 /***************************** start function that generates XMLDOM *******************************************/
+var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	   if (this.readyState == 4 && this.status == 200) {
 	       myFunction(this);
@@ -257,7 +257,7 @@ var myScene;
 }
 
 function unisci() {
-	parser();
+	parser();	
 	setup3dhop();
 }
 
@@ -281,9 +281,6 @@ $(document).ready(function(){
 	update_lightcontroller(-0.17,-0.17);	
 //---------------------------------------------------------------------------------------------
 	init3dhop();
-
 	unisci();
-
 });
 // onload occurs when all content has been loaded 
-
