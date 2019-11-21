@@ -68,7 +68,7 @@ function actionsToolbar(action) {
 
 function log(msg) {
 	document.getElementById("log-text").innerHTML += msg + "\n";
-	document.getElementById("log-text").scrollTop = document.getElementById("log-text").scrollHeight;
+	document.getElementById("log-text").scrollTop = document.getElementById("log-text").scrollHeight; 
 }
 
 function lightSwitchL(on) {
@@ -78,10 +78,16 @@ function lightSwitchL(on) {
 	    $('#light_on').css("visibility", "visible");
 	    $('#lighting_off').css("visibility", "hidden");	//manage lighting combined interface
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
-		
+
 		var elem = document.getElementById("lightcontroller");
-		var pos = 110;
-		elem.style.left = pos + "px"; 
+		/*var pos = 8;
+		elem.style.left = pos + "%"; 
+		elem.style.top = "24%"; 
+		*/
+
+		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 25));
+		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top - 25));
+
 	}
 	else{
     	$('#light_on').css("visibility", "hidden");
