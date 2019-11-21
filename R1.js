@@ -16,7 +16,7 @@ xhttp.onreadystatechange = function() {
    }
 };
 
-xhttp.open("GET", "R1.xml", true);
+xhttp.open("GET", "R1.xml", false);
 xhttp.send();
 /****************************** end function that generates XMLDOM ******************************************/
 
@@ -45,18 +45,19 @@ function actionsToolbar(action) {
 	if(action=='home') presenter.resetTrackball();
 		else if(action=='zoomin') presenter.zoomIn();
 		else if(action=='zoomout') presenter.zoomOut();
-		else if(action=='lighting' || action=='lighting_off') { presenter.enableSceneLighting(!presenter.isSceneLightingEnabled()); lightingSwitch(); }
+		else if(action=='lighting' || action=='lighting_off') {
+			if (action=='lighting'){
+				lightSwitchL('light_on');
+			}
+			presenter.enableSceneLighting(!presenter.isSceneLightingEnabled()); lightingSwitch();
+		}
 		//else if(action=='light' || action=='light_on') { presenter.enableLightTrackball(!presenter.isLightTrackballEnabled()); lightSwitch(); }
 		else if(action=='light') {
-			var elem = document.getElementById("lightcontroller");
-			var pos = 110;
-			elem.style.left = pos + "px"; 
 			lightSwitchL('light');
+			presenter.enableSceneLighting('lighting_off');
+			lightingSwitch('lighting_off');
 		}
 		else if (action=='light_on'){
-			var elem = document.getElementById("lightcontroller");   
-			var pos = -250;
-			elem.style.left = pos + "px"; 
 			lightSwitchL('light_on');
 		}		
 		else if(action=='perspective' || action=='orthographic') { presenter.toggleCameraType(); cameraSwitch(); }
@@ -77,10 +78,18 @@ function lightSwitchL(on) {
 	    $('#light_on').css("visibility", "visible");
 	    $('#lighting_off').css("visibility", "hidden");	//manage lighting combined interface
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
+		
+		var elem = document.getElementById("lightcontroller");
+		var pos = 110;
+		elem.style.left = pos + "px"; 
 	}
 	else{
     	$('#light_on').css("visibility", "hidden");
     	$('#light').css("visibility", "visible");
+    	
+    	var elem = document.getElementById("lightcontroller");   
+		var pos = -250;
+		elem.style.left = pos + "px"; 
     }
 }
 
@@ -275,7 +284,8 @@ $(document).ready(function(){
 //---------------------------------------------------------------------------------------------
 	
 	init3dhop();
+	setup3dhop();
 
 });
 // onload occurs when all content has been loaded 
-window.onload = setup3dhop;
+//window.onload = setup3dhop;
