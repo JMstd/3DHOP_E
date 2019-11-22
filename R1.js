@@ -256,11 +256,6 @@ var myScene;
 	presenter._onEndMeasurement = onEndMeasure;
 }
 
-function unisci() {
-	parser();	
-	setup3dhop();
-}
-
 $(document).ready(function(){
 	//resizeCanvas(800,600); 
 	//---------------------------------------------------------------------------------------------
@@ -281,6 +276,8 @@ $(document).ready(function(){
 	update_lightcontroller(-0.17,-0.17);	
 //---------------------------------------------------------------------------------------------
 	init3dhop();
-	unisci();
+	parser();	
+	setup3dhop();
+
 });
 // onload occurs when all content has been loaded 
