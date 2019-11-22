@@ -252,7 +252,6 @@ var myScene;
 	presenter._onPickedInstance = onPickedInstance;
 */
 /*fine hotspots*/
-
 	presenter._onEndMeasurement = onEndMeasure;
 }
 
@@ -278,6 +277,5 @@ $(document).ready(function(){
 	init3dhop();
 	parser();	
 	setup3dhop();
-
 });
 // onload occurs when all content has been loaded 
