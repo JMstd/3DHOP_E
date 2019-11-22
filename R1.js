@@ -41,25 +41,17 @@ function myFunction(xml) {
 /************************************************************************/
 
 function actionsToolbar(action) {
-	//if(action=='home') presenter.setTrackballPosition([ w0, w1, w2]);
 	if(action=='home') presenter.resetTrackball();
 		else if(action=='zoomin') presenter.zoomIn();
 		else if(action=='zoomout') presenter.zoomOut();
 		else if(action=='lighting' || action=='lighting_off') {
 			if (action=='lighting'){
-				lightSwitchL('light_on');
+				lightSwitchL('light_off');
 			}
 			presenter.enableSceneLighting(!presenter.isSceneLightingEnabled()); lightingSwitch();
 		}
-		//else if(action=='light' || action=='light_on') { presenter.enableLightTrackball(!presenter.isLightTrackballEnabled()); lightSwitch(); }
-		else if(action=='light') {
-			lightSwitchL('light');
-			presenter.enableSceneLighting('lighting_off');
-			lightingSwitch('lighting_off');
-		}
-		else if (action=='light_on'){
-			lightSwitchL('light_on');
-		}		
+		else if(action=='light') lightSwitchL('light');
+		else if(action=='light_off') lightSwitchL('light_off');		
 		else if(action=='perspective' || action=='orthographic') { presenter.toggleCameraType(); cameraSwitch(); }
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
@@ -71,32 +63,26 @@ function log(msg) {
 	document.getElementById("log-text").scrollTop = document.getElementById("log-text").scrollHeight; 
 }
 
-function lightSwitchL(on) {
+function lightSwitchL(status) {
 
-	if(on == 'light'){
+	if(status == 'light'){
 		$('#light').css("visibility", "hidden");
-	    $('#light_on').css("visibility", "visible");
+	    $('#light_off').css("visibility", "visible");
 	    $('#lighting_off').css("visibility", "hidden");	//manage lighting combined interface
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
-
-		var elem = document.getElementById("lightcontroller");
-		/*var pos = 8;
-		elem.style.left = pos + "%"; 
-		elem.style.top = "24%"; 
-		*/
 
 		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 25));
 		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top - 25));
 
+		presenter.enableSceneLighting('lighting_off');
+		lightingSwitch('lighting_off');
 	}
 	else{
-    	$('#light_on').css("visibility", "hidden");
+    	$('#light_off').css("visibility", "hidden");
     	$('#light').css("visibility", "visible");
     	
-    	var elem = document.getElementById("lightcontroller");   
-		var pos = -250;
-		elem.style.left = pos + "px"; 
-    }
+    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 250));
+   }
 }
 
 // start lightController functions ---------------------------------------------------------------------------------------------
