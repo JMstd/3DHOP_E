@@ -1,12 +1,13 @@
 
-var start="1.10";
+var start=1.10;
 var name;
 var myurl;
 var mdI;
-var stMinD="1.5";
-var stMaxD="3.0";
-var stMinT="-80.0";
-var stMaxT="80.0";
+var stMinD=2.5;
+var stMaxD=3.0;
+var stMinT=-80.0;
+var stMaxT=80.0;
+var _PanX = 0.0;
 
 /***************************** start function that generates XMLDOM *******************************************/
 var xhttp = new XMLHttpRequest();
@@ -56,6 +57,68 @@ function actionsToolbar(action) {
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
 		else if(action=='full' || action=='full_on') fullscreenSwitch();
+
+	else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
+	}
+
+    function clamp(value, low, high) {
+      if(value < low) return low;
+      if(value > high) return high;
+      return value;
+    }
+/*
+function stepLeft(){
+presenter.trackball.isAnimating = false;		
+		presenter.trackball.trackOptions.panX -= 2.0;
+		presenter.trackball.trackOptions.panX = presenter.trackball.trackOptions.clamp(presenter.trackball.trackOptions.panX, presenter.trackball.trackOptions.minMaxPanX[0], presenter.trackball.trackOptions.minMaxPanX[1]);		
+		presenter.trackball.computeMatrix();
+}
+*/
+function step(action){
+	var my_pos = [];
+	switch(action) {
+		case 'move_up'   : 	
+			/*presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(-0.1), 0.0, 1.10]); break;*/
+			my_pos = presenter.getTrackballPosition();
+			my_pos[3]-=0.1;
+			presenter.animateToTrackballPosition(my_pos);
+			break;
+		case 'move_dawn' :
+			my_pos = presenter.getTrackballPosition();
+			my_pos[3]+=0.1;
+			presenter.animateToTrackballPosition(my_pos);
+			break;
+			//presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(0.1), 0.0, 1.10]); break;
+		case 'move_right' : 
+		//presenter.animateToTrackballPosition([0.0, 0.0, s+=(-0.1), 0.0, 0.0, 1.10]); break;
+			my_pos = presenter.getTrackballPosition();
+			my_pos[2]-=0.1;
+			presenter.animateToTrackballPosition(my_pos);
+			break;
+		case 'move_left' :	
+		//presenter.animateToTrackballPosition([0.0, 0.0, s+=(0.1), 0.0, 0.0, 1.10]); break;
+			my_pos = presenter.getTrackballPosition();
+			my_pos[2]+=0.1;
+			presenter.animateToTrackballPosition(my_pos);
+			break;
+	}
+}
+
+function stepUp(){
+	presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(-0.1), 0.0, 1.10]);
+}
+
+function stepDawn(){
+	presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(0.1), 0.0, 1.10]);
+}
+
+function stepLeft(){
+	presenter.animateToTrackballPosition([0.0, 0.0, s+=(0.1), 0.0, 0.0, 1.10]);
+}
+
+function stepRight(){
+//	myscene.trackball.trackOptions.startPanX = _PanX + 0.3;
+	presenter.animateToTrackballPosition([0.0, 0.0, s+=(-0.1), 0.0, 0.0, 1.10]);
 }
 
 function log(msg) {
@@ -221,14 +284,21 @@ var myScene;
 	myscene.meshes[name] = { url : "models"+myurl };
 	myscene.modelInstances[mdI] = { mesh : name };
 	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
-	myscene.trackball = { type : TurnTableTrackball };
+	myscene.trackball = { type : TurntablePanTrackball };
 	myscene.trackball.trackOptions = {
         									startPhi: 0.0,
 								        	startTheta: 0.0,
         								startDistance : start,
 								        	minMaxPhi: [-180, 180],
 							 			minMaxTheta   : "["+stMinT+", "+stMaxT+"]",
-							 			minMaxDist    : "["+stMinD+", "+stMaxD+"]"
+							 			minMaxDist    : "["+stMinD+", "+stMaxD+"]",
+		startPanX     : _PanX,
+		startPanY     : 0.0,
+		startPanZ     : 0.0,
+		minMaxPanX    : [-0.5, 0.5],
+		minMaxPanY    : [-0.6, 0.6],
+		minMaxPanZ    : [-0.3, 0.3]
+
 									};
 	myscene.space = {// tutta questa parte si puo mettere in xml, almeno la patrte con i parametri della camera secondo me vanno messi in xml
 						centerMode       : "scene",

@@ -49,3 +49,46 @@ body {
 	left					: 0; 
 }
 */
+
+/****************start move_control**********************/
+#movement_control {
+}
+.move_{
+	position: fixed;
+	right: 1%;
+	top:10%;
+}
+	
+.up{
+	transform: rotate(270deg);
+	margin-right: 10%;
+	margin-top: -5%;
+}
+.dawn{
+	transform: rotate(90deg);
+	margin-right: 10%;
+		margin-top: 5%;
+}
+.right{
+	margin-right: 5%;
+}
+.left{
+	transform: rotate(180deg);
+	margin-right: 15%;
+}
+
+
+/*
+.up{
+	transform: rotate(270deg);
+	float: right;
+	margin-right: 10%;
+}
+.dawn{transform: rotate(90deg);}
+.right{
+	float: right;
+	margin-right: 5%;
+}
+.left{transform: rotate(180deg);}
+*/
+/****************end move_control**********************/
