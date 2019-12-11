@@ -58,68 +58,33 @@ function actionsToolbar(action) {
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
 		else if(action=='full' || action=='full_on') fullscreenSwitch();
 
-	else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
+		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
 	}
-
-    function clamp(value, low, high) {
-      if(value < low) return low;
-      if(value > high) return high;
-      return value;
-    }
-/*
-function stepLeft(){
-presenter.trackball.isAnimating = false;		
-		presenter.trackball.trackOptions.panX -= 2.0;
-		presenter.trackball.trackOptions.panX = presenter.trackball.trackOptions.clamp(presenter.trackball.trackOptions.panX, presenter.trackball.trackOptions.minMaxPanX[0], presenter.trackball.trackOptions.minMaxPanX[1]);		
-		presenter.trackball.computeMatrix();
-}
-*/
+// start menager of arrows movement
 function step(action){
 	var my_pos = [];
+	my_pos = presenter.getTrackballPosition();
+
 	switch(action) {
 		case 'move_up'   : 	
-			/*presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(-0.1), 0.0, 1.10]); break;*/
-			my_pos = presenter.getTrackballPosition();
 			my_pos[3]-=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
 		case 'move_dawn' :
-			my_pos = presenter.getTrackballPosition();
 			my_pos[3]+=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
-			//presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(0.1), 0.0, 1.10]); break;
 		case 'move_right' : 
-		//presenter.animateToTrackballPosition([0.0, 0.0, s+=(-0.1), 0.0, 0.0, 1.10]); break;
-			my_pos = presenter.getTrackballPosition();
 			my_pos[2]-=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
 		case 'move_left' :	
-		//presenter.animateToTrackballPosition([0.0, 0.0, s+=(0.1), 0.0, 0.0, 1.10]); break;
-			my_pos = presenter.getTrackballPosition();
 			my_pos[2]+=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
 	}
 }
-
-function stepUp(){
-	presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(-0.1), 0.0, 1.10]);
-}
-
-function stepDawn(){
-	presenter.animateToTrackballPosition([0.0, 0.0, 0.0, s+=(0.1), 0.0, 1.10]);
-}
-
-function stepLeft(){
-	presenter.animateToTrackballPosition([0.0, 0.0, s+=(0.1), 0.0, 0.0, 1.10]);
-}
-
-function stepRight(){
-//	myscene.trackball.trackOptions.startPanX = _PanX + 0.3;
-	presenter.animateToTrackballPosition([0.0, 0.0, s+=(-0.1), 0.0, 0.0, 1.10]);
-}
+// end menager of arrows movement
 
 function log(msg) {
 	document.getElementById("log-text").innerHTML += msg + "\n";

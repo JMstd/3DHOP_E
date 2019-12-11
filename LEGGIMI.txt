@@ -1,21 +1,14 @@
 PROBLEMI: 
 	
-	1) al momento attuale facendo zoom in negativo da home, mi avvicina leggermente	
-	
-	2) i valori non vengono correttamente passati da xml a js. 
+	1) i valori non vengono correttamente passati da xml a js. 
         Vengono pssati ma non in tempo per poter caricare correttamente la pagina. 
         Cambiando il valore da "true" a "false" in xhttp.open(), diventando cosi' sincorno, funziona, ma questa pratica e' deprecata. 
 
-	3) il controller della luce e' in linea con il comportamento di altri strumenti di 3dhop (es. measure tool). Va ancora alineato lo stil dal punto 
+	2) il controller della luce e' in linea con il comportamento di altri strumenti di 3dhop (es. measure tool). Va ancora alineato lo stil dal punto 
         di vista visivo.
         ATT. al momento un nome "lightcontrol_on.png" e il suo utilizzo potrebbe essere errato, verificare
         ATT. come in linea con 3dhop, quando si visualizza il tutto da mobile, i vari controlli, appaiono sovraposti al modello
-        
-
-	4) sono assenti le freccette per andare su e giu' una volta fatto zoom 
-
  
 
 VALUTAZIONI: 
 
-	al cambiare dei valori di minMaxDist in [0.2, 4.0] (che sono i valori nell'esempio online) lo zoom smette di funzionare correttamente. per questo i valori attuali sono [1.5, 3.0]  
