@@ -53,11 +53,13 @@ function actionsToolbar(action) {
 		}
 		else if(action=='light') lightSwitchL('light');
 		else if(action=='light_off') lightSwitchL('light_off');		
+		//--COLOR--	
+			else if(action=='color' || action=='color_on') { presenter.toggleInstanceSolidColor(HOP_ALL, true); colorSwitch(); } 
+		//--COLOR--	
 		else if(action=='perspective' || action=='orthographic') { presenter.toggleCameraType(); cameraSwitch(); }
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
 		else if(action=='full' || action=='full_on') fullscreenSwitch();
-
 		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
 	}
 // start menager of arrows movement
@@ -247,7 +249,9 @@ var myScene;
 //*******************************************************inizio passaggio da xml *************************
     //	myscene.meshes[name[0]] = { url : "models"+myurl };
 	myscene.meshes[name] = { url : "models"+myurl };
-	myscene.modelInstances[mdI] = { mesh : name };
+	myscene.modelInstances[mdI] = { mesh : name,
+									color: [-2.0, -2.0, -2.0]
+								};
 	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
 	myscene.trackball = { type : TurntablePanTrackball };
 	myscene.trackball.trackOptions = {
