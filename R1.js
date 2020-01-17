@@ -1,8 +1,8 @@
 
 var start=1.10;
-var name;
-var myurl;
-var mdI;
+var name="bewcastle.nxz";
+var myurl="/multires/bewcastle.nxz";
+var mdI="BWC";
 var stMinD=2.5;
 var stMaxD=3.0;
 var stMinT=-80.0;
@@ -25,7 +25,7 @@ xhttp.send();
 //start menagement of XML nodes 
 function myFunction(xml) {
     var xmlDoc = xml.responseXML;
-
+/*
     var x = xmlDoc.getElementsByTagName("NAME")[0];
     var y = x.childNodes[0];
     name = y.nodeValue;
@@ -37,7 +37,7 @@ function myFunction(xml) {
     var x = xmlDoc.getElementsByTagName("MODELISTANCE")[0];
     var y = x.childNodes[0];
     mdI = y.nodeValue;
-} 
+*/} 
 //end menagement of XML nodes 
 /************************************************************************/
 
