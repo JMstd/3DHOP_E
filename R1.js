@@ -1,45 +1,13 @@
 
 var start=1.10;
 var name="bewcastle.nxz";
-var myurl="/multires/bewcastle.nxz";
+var myurl="models/multires/bewcastle.nxz";
 var mdI="BWC";
 var stMinD=2.5;
 var stMaxD=3.0;
 var stMinT=-80.0;
 var stMaxT=80.0;
 var _PanX = 0.0;
-
-/***************************** start function that generates XMLDOM *******************************************/
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-   if (this.readyState == 4 && this.status == 200) {
-       myFunction(this);
-   }
-};
-
-xhttp.open("GET", "R1.xml", false);
-xhttp.send();
-/****************************** end function that generates XMLDOM ******************************************/
-
-/************************************************************************/
-//start menagement of XML nodes 
-function myFunction(xml) {
-    var xmlDoc = xml.responseXML;
-/*
-    var x = xmlDoc.getElementsByTagName("NAME")[0];
-    var y = x.childNodes[0];
-    name = y.nodeValue;
-
-    var x = xmlDoc.getElementsByTagName("URL")[0];
-    var y = x.childNodes[0];
-    myurl = y.nodeValue;
-
-    var x = xmlDoc.getElementsByTagName("MODELISTANCE")[0];
-    var y = x.childNodes[0];
-    mdI = y.nodeValue;
-*/} 
-//end menagement of XML nodes 
-/************************************************************************/
 
 function actionsToolbar(action) {
 	if(action=='home') presenter.resetTrackball();
@@ -215,8 +183,6 @@ function relMouseCoords(event){
 HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 // end lightControler functions ************************************************************************************************************
 
-
-
 //start hotspots f()
 function onPickedSpot(id) {
   switch(id) {
@@ -248,26 +214,25 @@ var myScene;
 
 //*******************************************************inizio passaggio da xml *************************
     //	myscene.meshes[name[0]] = { url : "models"+myurl };
-	myscene.meshes[name] = { url : "models"+myurl };
+	myscene.meshes[name] = { url : myurl };
 	myscene.modelInstances[mdI] = { mesh : name,
 									color: [-2.0, -2.0, -2.0]
 								};
 	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
 	myscene.trackball = { type : TurntablePanTrackball };
 	myscene.trackball.trackOptions = {
-        									startPhi: 0.0,
-								        	startTheta: 0.0,
+										startPhi: 0.0,
+								        startTheta: 0.0,
         								startDistance : start,
-								        	minMaxPhi: [-180, 180],
+								        minMaxPhi: [-180, 180],
 							 			minMaxTheta   : "["+stMinT+", "+stMaxT+"]",
 							 			minMaxDist    : "["+stMinD+", "+stMaxD+"]",
-		startPanX     : _PanX,
-		startPanY     : 0.0,
-		startPanZ     : 0.0,
-		minMaxPanX    : [-0.5, 0.5],
-		minMaxPanY    : [-0.6, 0.6],
-		minMaxPanZ    : [-0.3, 0.3]
-
+										startPanX     : _PanX,
+										startPanY     : 0.0,
+										startPanZ     : 0.0,
+										minMaxPanX    : [-0.5, 0.5],
+										minMaxPanY    : [-0.6, 0.6],
+										minMaxPanZ    : [-0.3, 0.3]
 									};
 	myscene.space = {// tutta questa parte si puo mettere in xml, almeno la patrte con i parametri della camera secondo me vanno messi in xml
 						centerMode       : "scene",
@@ -295,7 +260,6 @@ var myScene;
 }
 
 $(document).ready(function(){
-	//resizeCanvas(800,600); 
 	//---------------------------------------------------------------------------------------------
 	var lightControllerCanvas = document.getElementById("lightcontroller_canvas");
 	lightControllerCanvas.addEventListener("touchstart", click_lightcontroller, false);

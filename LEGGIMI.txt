@@ -6,9 +6,6 @@ PROBLEMI:
 
 	2) il controller della luce e' in linea con il comportamento di altri strumenti di 3dhop (es. measure tool). Va ancora alineato lo stil dal punto 
         di vista visivo.
-        ATT. al momento un nome "lightcontrol_on.png" e il suo utilizzo potrebbe essere errato, verificare
         ATT. come in linea con 3dhop, quando si visualizza il tutto da mobile, i vari controlli, appaiono sovraposti al modello
  
-
 VALUTAZIONI: 
-
