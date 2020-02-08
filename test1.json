@@ -1,0 +1,22 @@
+{
+	"viewer": "3dhop",
+	"trackball": { 
+		"type" : "TurntablePanTrackball" 
+	},
+	"data":{
+		"name": "bewcastle.nxz",
+		"mdI": "BWC",
+		"url": "models/multires/bewcastle.nxz",
+		"start": 1.10,
+		"PanX":0.0,
+		"minMaxTheta": [
+			-80.0,
+			80.0
+		],
+		"minMaxDist":[
+			2.5,
+			3.0
+		]
+	},
+	"Hotspots":{}
+}

@@ -20,6 +20,12 @@ xmlhttp.onreadystatechange = function() {
 xmlhttp.open("GET", "test.json", false);
 xmlhttp.send();
 
+/***************************** start function that upload JSON ******************************************
+$.getJSON("test.json", function (json) {
+	myurl = json.dispositivo.parametri.p1;
+});
+***************************** end function that upload JSON ******************************************/
+
 /********************************Set data from JSON*************************************/
 //eventualmente può avere senso settare dei valori di default, per rendere visibile il modello, in modo che se , l'utente non inserisce nulla, vengano presi quelli. Altrimenti qui sotto si reinseriscono i valor scelti dall'utente.
 name= ANNOTATIONDATA.name;
