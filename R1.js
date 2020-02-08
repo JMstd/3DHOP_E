@@ -1,13 +1,37 @@
 
-var start=1.10;
-var name="bewcastle.nxz";
-var myurl="models/multires/bewcastle.nxz";
-var mdI="BWC";
-var stMinD=2.5;
-var stMaxD=3.0;
-var stMinT=-80.0;
-var stMaxT=80.0;
+var start=0;
+var name="";
+var myurl="";
+var mdI="";
+var stMinD=0;
+var stMaxD=0;
+var stMinT=0;
+var stMaxT=0;
 var _PanX = 0.0;
+var ANNOTATIONDATA ={};
+
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myObj = JSON.parse(this.responseText);
+    ANNOTATIONDATA= myObj;
+  }
+};
+xmlhttp.open("GET", "test.json", false);
+xmlhttp.send();
+
+/********************************Set data from JSON*************************************/
+//eventualmente può avere senso settare dei valori di default, per rendere visibile il modello, in modo che se , l'utente non inserisce nulla, vengano presi quelli. Altrimenti qui sotto si reinseriscono i valor scelti dall'utente.
+name= ANNOTATIONDATA.name;
+mdI= ANNOTATIONDATA.mdI;
+myurl= ANNOTATIONDATA.url;
+start= ANNOTATIONDATA.start;
+stMinT= ANNOTATIONDATA.minMaxTheta[0];
+stMaxT= ANNOTATIONDATA.minMaxTheta[1];
+stMinD= ANNOTATIONDATA.minMaxDist[0];
+stMaxD= ANNOTATIONDATA.minMaxDist[1];
+_PanX= ANNOTATIONDATA.PanX;
+
 
 function actionsToolbar(action) {
 	if(action=='home') presenter.resetTrackball();
@@ -260,6 +284,19 @@ var myScene;
 }
 
 $(document).ready(function(){
+/*  STESSO PROBLEMA DI XML, PASSA I DATI MA NON CARICA IL MODELLO 'NON LI PASSA NEL MOMENTO GIUSTO'
+	$.ajax({
+		url: "uri_test.json",
+		dataType: 'json',
+		success: function(data) {
+		  ANNOTATIONDATA= data.uri;
+		  myurl = ANNOTATIONDATA;
+		},
+		error: function() {
+		  alert("error");
+		}
+	  });      
+*/  
 	//---------------------------------------------------------------------------------------------
 	var lightControllerCanvas = document.getElementById("lightcontroller_canvas");
 	lightControllerCanvas.addEventListener("touchstart", click_lightcontroller, false);
