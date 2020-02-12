@@ -51,23 +51,30 @@ body {
 */
 
 /****************start move_control**********************/
+
 #movement_control {
 }
 .move_{
 	position: fixed;
 	right: 1%;
 	top:10%;
+	background-color:rgba(50, 50, 50, 0.5);
+	padding: 1.5%;
+	border:2px solid #f8f8f8; 
+	border-radius:10px;
+	box-shadow:1px 1px 10px #f8f8f8;
+	/*Questa parte va magari ancora migliorata, controllare se rispetta del tutto quello che viene fatto nel panel_css di 3dhop*/
 }
 	
 .up{
 	transform: rotate(270deg);
-	margin-right: 10%;
-	margin-top: -5%;
+	margin-right: 9%;
+	margin-top: -3%;
 }
 .dawn{
 	transform: rotate(90deg);
-	margin-right: 10%;
-		margin-top: 5%;
+	margin-right: 9%;
+	margin-top: 3%;
 }
 .right{
 	margin-right: 5%;

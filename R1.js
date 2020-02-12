@@ -74,7 +74,7 @@ function step(action){
 			my_pos[3]+=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
-		case 'move_right' : 
+/*		case 'move_right' : 
 			my_pos[2]-=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
@@ -82,6 +82,7 @@ function step(action){
 			my_pos[2]+=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
+*/	
 	}
 }
 // end menager of arrows movement
@@ -324,6 +325,8 @@ $(document).ready(function(){
 	init3dhop();
 	setup3dhop();
 
+		$('#move_right').css("opacity", "0.2");
+		$('#move_left').css("opacity", "0.2");
 });
 // onload occurs when all content has been loaded 
 //window.onload = setup3dhop;
