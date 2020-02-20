@@ -9,6 +9,7 @@ var stMinT=0;
 var stMaxT=0;
 var _PanX = 0.0;
 var ANNOTATIONDATA ={};
+var HOTSPOTSDATA ={};
 
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
@@ -20,11 +21,16 @@ xmlhttp.onreadystatechange = function() {
 xmlhttp.open("GET", "test.json", false);
 xmlhttp.send();
 
-/***************************** start function that upload JSON ******************************************
-$.getJSON("test.json", function (json) {
-	myurl = json.dispositivo.parametri.p1;
-});
-***************************** end function that upload JSON ******************************************/
+//*********************************************************************************************************************
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myObj = JSON.parse(this.responseText);
+    HOTSPOTSDATA= myObj;
+  }
+};
+xmlhttp.open("GET", "hotspots.json", false);
+xmlhttp.send();
 
 /********************************Set data from JSON*************************************/
 //eventualmente può avere senso settare dei valori di default, per rendere visibile il modello, in modo che se , l'utente non inserisce nulla, vengano presi quelli. Altrimenti qui sotto si reinseriscono i valor scelti dall'utente.
@@ -38,6 +44,24 @@ stMinD= ANNOTATIONDATA.minMaxDist[0];
 stMaxD= ANNOTATIONDATA.minMaxDist[1];
 _PanX= ANNOTATIONDATA.PanX;
 
+/*
+$.getJSON('test.json', function (data, textStatus, jqXHR){
+    ANNOTATIONDATA=data;
+});
+
+/*    
+    $.get("test.json", function(data, status){
+      alert("Data: " + data + "\nStatus: " + status);
+      ANNOTATIONDATA = data;
+    });
+/*
+const Url = "test.json";
+$('#toolbar').ready(function(){
+	$.get(Url, function(data, status){
+		ANNOTATIONDATA = data;
+	});
+});*/
+// ATT /_\ l'errore json è dato dal fatto che l'estensione del file è json e non txt
 
 function actionsToolbar(action) {
 	if(action=='home') presenter.resetTrackball();
@@ -250,7 +274,7 @@ var myScene;
 									color: [-2.0, -2.0, -2.0]
 								};
 	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
-	myscene.trackball = { type : TurntablePanTrackball };
+ 	myscene.trackball = { type : TurntablePanTrackball };
 	myscene.trackball.trackOptions = {
 										startPhi: 0.0,
 								        startTheta: 0.0,
@@ -289,6 +313,32 @@ var myScene;
 
 	presenter._onEndMeasurement = onEndMeasure;
 }
+
+
+//*********************************************************************************************************************
+/*
+function updateScene(){
+	if(!presenter._scene) return;
+	presenter._scene.spots = {};
+	presenter._spotsProgressiveID = 10;	// reset to avoid accumulation
+	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++)
+	{
+		var pos = HOTSPOTSDATA.annotations[ii].position
+		var radius = HOTSPOTSDATA.annotations[ii].radius;
+		var newSpot = {
+			mesh            : "sphere",
+			color           : [ 0.0, 0.25, 1.0 ],
+			transform : { 
+				translation : pos,
+				scale : [radius, radius, radius],
+				},
+			//visible         : true,
+		};
+		presenter._scene.spots[HOTSPOTSDATA.annotations[ii].name] = presenter._parseSpot(newSpot);
+	}
+	presenter._scenePrepare();
+	presenter.repaint();	
+}*/
 
 $(document).ready(function(){
 /*  STESSO PROBLEMA DI XML, PASSA I DATI MA NON CARICA IL MODELLO 'NON LI PASSA NEL MOMENTO GIUSTO'
