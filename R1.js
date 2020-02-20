@@ -9,6 +9,11 @@ var stMinT=0;
 var stMaxT=0;
 var _PanX = 0.0;
 var ANNOTATIONDATA ={};
+var tipo_hs="Sphere";
+var url_hs="models/singleres/sphere.ply";
+// prate rilevante da prendere da json --> HOTSPOTDATA
+var radius_hs=0;
+var position_hs=[];
 var HOTSPOTSDATA ={};
 
 var xmlhttp = new XMLHttpRequest();
@@ -43,6 +48,35 @@ stMaxT= ANNOTATIONDATA.minMaxTheta[1];
 stMinD= ANNOTATIONDATA.minMaxDist[0];
 stMaxD= ANNOTATIONDATA.minMaxDist[1];
 _PanX= ANNOTATIONDATA.PanX;
+
+
+
+// hotspotdata 
+radius_hs = HOTSPOTSDATA.annotations[0].radius;
+position_hs = HOTSPOTSDATA.annotations[0].position;
+var cont={};
+//	if(!presenter._scene) return;
+//	presenter._scene.spots = {};
+//	presenter._spotsProgressiveID = 10;	// reset to avoid accumulation
+	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++)
+	{
+		var pos = HOTSPOTSDATA.annotations[ii].position
+		var radius = HOTSPOTSDATA.annotations[ii].radius;
+		var newSpot = {
+			mesh      : tipo_hs,
+			color     : [ 0.0, 0.25, 1.0 ],
+			transform : { 
+				matrix:
+					SglMat4.mul(SglMat4.translation(pos), 
+					SglMat4.scaling([radius, radius, radius]))
+				},
+		};
+		cont[HOTSPOTSDATA.annotations[ii].name] = newSpot;
+	}
+//	presenter._scenePrepare();
+//	presenter.repaint();
+
+// fine hotspotdata
 
 /*
 $.getJSON('test.json', function (data, textStatus, jqXHR){
@@ -270,9 +304,11 @@ var myScene;
 //*******************************************************inizio passaggio da xml *************************
     //	myscene.meshes[name[0]] = { url : "models"+myurl };
 	myscene.meshes[name] = { url : myurl };
+	myscene.meshes[tipo_hs] = {url : url_hs}; // mi dichiara la Sphere 
 	myscene.modelInstances[mdI] = { mesh : name,
 									color: [-2.0, -2.0, -2.0]
 								};
+	myscene.spots =cont;
 	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
  	myscene.trackball = { type : TurntablePanTrackball };
 	myscene.trackball.trackOptions = {
@@ -313,6 +349,8 @@ var myScene;
 
 	presenter._onEndMeasurement = onEndMeasure;
 }
+
+
 
 
 //*********************************************************************************************************************
@@ -377,6 +415,7 @@ $(document).ready(function(){
 
 		$('#move_right').css("opacity", "0.2");
 		$('#move_left').css("opacity", "0.2");
+
 });
 // onload occurs when all content has been loaded 
 //window.onload = setup3dhop;
