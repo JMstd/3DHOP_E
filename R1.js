@@ -11,10 +11,8 @@ var _PanX = 0.0;
 var ANNOTATIONDATA ={};
 var tipo_hs="Sphere";
 var url_hs="models/singleres/sphere.ply";
-// prate rilevante da prendere da json --> HOTSPOTDATA
-//var radius_hs=0;
-//var position_hs=[];
 var HOTSPOTSDATA ={};
+
 
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
@@ -27,6 +25,7 @@ xmlhttp.open("GET", "test.json", false);
 xmlhttp.send();
 
 //*********************************************************************************************************************
+
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
@@ -50,30 +49,21 @@ stMaxD= ANNOTATIONDATA.minMaxDist[1];
 _PanX= ANNOTATIONDATA.PanX;
 
 // hotspotdata 
-//radius_hs = HOTSPOTSDATA.annotations[0].radius;
-//position_hs = HOTSPOTSDATA.annotations[0].position;
 var cont={};
-//	if(!presenter._scene) return;
-//	presenter._scene.spots = {};
-//	presenter._spotsProgressiveID = 10;	// reset to avoid accumulation
-	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++)
-	{
-		var pos = HOTSPOTSDATA.annotations[ii].position
-		var radius = HOTSPOTSDATA.annotations[ii].radius;
-		var newSpot = {
-			mesh      : tipo_hs,
-			color     : [ 0.0, 0.25, 1.0 ],
-			transform : { 
-				matrix:
-					SglMat4.mul(SglMat4.translation(pos), 
-					SglMat4.scaling([radius, radius, radius]))
-				},
-		};
-		cont[HOTSPOTSDATA.annotations[ii].name] = newSpot;
-	}
-//	presenter._scenePrepare();
-//	presenter.repaint();
-
+for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
+	var pos = HOTSPOTSDATA.annotations[ii].position
+	var radius = HOTSPOTSDATA.annotations[ii].radius;
+	var newSpot = {
+		mesh      : tipo_hs,
+		color     : [ 0.0, 0.25, 1.0 ],
+		transform : { 
+			matrix:
+				SglMat4.mul(SglMat4.translation(pos), 
+				SglMat4.scaling([radius, radius, radius]))
+			},
+	};
+	cont[HOTSPOTSDATA.annotations[ii].name] = newSpot;
+}
 // fine hotspotdata
 
 /*
@@ -116,6 +106,7 @@ function actionsToolbar(action) {
 		else if(action=='full' || action=='full_on') fullscreenSwitch();
 		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
 	}
+
 // start menager of arrows movement
 function step(action){
 	var my_pos = [];
@@ -269,6 +260,7 @@ function relMouseCoords(event){
 }
 HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 // end lightControler functions ************************************************************************************************************
+
 // ****************************** convertTOGlobal/Local prese da SPOTMAKER, per trasformare le coordinate da locali a globali. Da usare per muovere il modello 
 // ****************************** quando si clicca sul hotspot  
 function convertToGlobal(state)
@@ -292,7 +284,7 @@ function convertToLocal(state)
 	newstate[0] = state[0];
 	newstate[1] = state[1];
 	// pan
-	
+
 	newstate[2] = (state[2] - presenter.sceneCenter[0]) * presenter.sceneRadiusInv;
 	newstate[3] = (state[3] - presenter.sceneCenter[1]) * presenter.sceneRadiusInv;
 	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
@@ -335,14 +327,12 @@ var myScene;
 	};
 
 //*******************************************************inizio passaggio da xml *************************
-    //	myscene.meshes[name[0]] = { url : "models"+myurl };
 	myscene.meshes[name] = { url : myurl };
-	myscene.meshes[tipo_hs] = {url : url_hs}; // mi dichiara la Sphere 
-	myscene.modelInstances[mdI] = { mesh : name,
+	myscene.meshes[tipo_hs] = {url : url_hs}; // mi dichiara la Sphere //può avere senso aggiungere altri modelli, orendere questa parte più facilmente interagibile con l'utente; oppure con l'hotspot
+	myscene.modelInstances[mdI] = { mesh : name,						// in modo che capisca da solo quale forma usare (nell'eventualità di hotspot con fome differenti) (usa "type" da hotspots.json)
 									color: [-2.0, -2.0, -2.0]
 								};
-	myscene.spots =cont;
-	//myscene.modelInstances[mdI].transform = {translation : [0.0, 0.0, 0.0] };
+	myscene.spots = cont;
  	myscene.trackball = { type : TurntablePanTrackball };
 	myscene.trackball.trackOptions = {
 										startPhi: 0.0,
@@ -375,41 +365,12 @@ var myScene;
 	presenter.setSpotVisibility(HOP_ALL, false, true);
 
 	presenter._onPickedSpot = onPickedSpot;
-/*	
-	presenter._onPickedInstance = onPickedInstance;
-*/
 /*fine hotspots*/
 
 	presenter._onEndMeasurement = onEndMeasure;
 }
 
-
-
-
 //*********************************************************************************************************************
-/*
-function updateScene(){
-	if(!presenter._scene) return;
-	presenter._scene.spots = {};
-	presenter._spotsProgressiveID = 10;	// reset to avoid accumulation
-	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++)
-	{
-		var pos = HOTSPOTSDATA.annotations[ii].position
-		var radius = HOTSPOTSDATA.annotations[ii].radius;
-		var newSpot = {
-			mesh            : "sphere",
-			color           : [ 0.0, 0.25, 1.0 ],
-			transform : { 
-				translation : pos,
-				scale : [radius, radius, radius],
-				},
-			//visible         : true,
-		};
-		presenter._scene.spots[HOTSPOTSDATA.annotations[ii].name] = presenter._parseSpot(newSpot);
-	}
-	presenter._scenePrepare();
-	presenter.repaint();	
-}*/
 
 $(document).ready(function(){
 /*  STESSO PROBLEMA DI XML, PASSA I DATI MA NON CARICA IL MODELLO 'NON LI PASSA NEL MOMENTO GIUSTO'
@@ -448,7 +409,6 @@ $(document).ready(function(){
 
 		$('#move_right').css("opacity", "0.2");
 		$('#move_left').css("opacity", "0.2");
-
 });
 // onload occurs when all content has been loaded 
 //window.onload = setup3dhop;
