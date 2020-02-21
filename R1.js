@@ -12,8 +12,8 @@ var ANNOTATIONDATA ={};
 var tipo_hs="Sphere";
 var url_hs="models/singleres/sphere.ply";
 // prate rilevante da prendere da json --> HOTSPOTDATA
-var radius_hs=0;
-var position_hs=[];
+//var radius_hs=0;
+//var position_hs=[];
 var HOTSPOTSDATA ={};
 
 var xmlhttp = new XMLHttpRequest();
@@ -49,11 +49,9 @@ stMinD= ANNOTATIONDATA.minMaxDist[0];
 stMaxD= ANNOTATIONDATA.minMaxDist[1];
 _PanX= ANNOTATIONDATA.PanX;
 
-
-
 // hotspotdata 
-radius_hs = HOTSPOTSDATA.annotations[0].radius;
-position_hs = HOTSPOTSDATA.annotations[0].position;
+//radius_hs = HOTSPOTSDATA.annotations[0].radius;
+//position_hs = HOTSPOTSDATA.annotations[0].position;
 var cont={};
 //	if(!presenter._scene) return;
 //	presenter._scene.spots = {};
@@ -271,13 +269,47 @@ function relMouseCoords(event){
 }
 HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 // end lightControler functions ************************************************************************************************************
+// ****************************** convertTOGlobal/Local prese da SPOTMAKER, per trasformare le coordinate da locali a globali. Da usare per muovere il modello 
+// ****************************** quando si clicca sul hotspot  
+function convertToGlobal(state)
+{
+	var newstate=[];
+	// angles
+	newstate[0] = state[0];
+	newstate[1] = state[1];
+	// pan
+	newstate[2] = (state[2] / presenter.sceneRadiusInv) + presenter.sceneCenter[0];
+	newstate[3] = (state[3] / presenter.sceneRadiusInv) + presenter.sceneCenter[1];
+	newstate[4] = (state[4] / presenter.sceneRadiusInv) + presenter.sceneCenter[2];
+	//distance
+	newstate[5] = state[5] / presenter.sceneRadiusInv;
+	return newstate;
+}
+function convertToLocal(state)
+{
+	var newstate=[];
+	// angles
+	newstate[0] = state[0];
+	newstate[1] = state[1];
+	// pan
+	newstate[2] = (state[2] - presenter.sceneCenter[0]) * presenter.sceneRadiusInv;
+	newstate[3] = (state[3] - presenter.sceneCenter[1]) * presenter.sceneRadiusInv;
+	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
+	//distance
+	newstate[5] = state[5] * presenter.sceneRadiusInv;
+	return newstate;
+}
+//********************************** 
 
 //start hotspots f()
 function onPickedSpot(id) {
-  switch(id) {
-     case 'Select'   : alert("Select Hotspot Clicked"); break;
-     case 'Sphere' : alert("Basis Hotspot Clicked"); break;
-  }
+//mi permette di prendere ed usare la posizione del json, una volta cliccato l'hotspot.
+	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
+		var view = HOTSPOTSDATA.annotations[ii].view
+		if (HOTSPOTSDATA.annotations[ii].name == id){
+			presenter.animateToTrackballPosition(convertToLocal(view));
+		};
+	}
 }
 //end hotspots f
 
