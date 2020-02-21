@@ -292,12 +292,13 @@ function convertToLocal(state)
 	newstate[0] = state[0];
 	newstate[1] = state[1];
 	// pan
+	
 	newstate[2] = (state[2] - presenter.sceneCenter[0]) * presenter.sceneRadiusInv;
 	newstate[3] = (state[3] - presenter.sceneCenter[1]) * presenter.sceneRadiusInv;
 	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
 	//distance
-	newstate[5] = state[5] * presenter.sceneRadiusInv;
-	return newstate;
+	newstate[5] = state[5] * presenter.sceneRadiusInv-0.8; // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
+	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.8, in modo da far diventare il tutto 1.20; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
 }
 //********************************** 
 
@@ -305,7 +306,7 @@ function convertToLocal(state)
 function onPickedSpot(id) {
 //mi permette di prendere ed usare la posizione del json, una volta cliccato l'hotspot.
 	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
-		var view = HOTSPOTSDATA.annotations[ii].view
+		var view = HOTSPOTSDATA.annotations[ii].view;
 		if (HOTSPOTSDATA.annotations[ii].name == id){
 			presenter.animateToTrackballPosition(convertToLocal(view));
 		};
