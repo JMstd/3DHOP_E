@@ -33,11 +33,14 @@ xmlhttp.onreadystatechange = function() {
     HOTSPOTSDATA= myObj;
   }
 };
-xmlhttp.open("GET", "hotspots.json", false);
+xmlhttp.open("GET", "annotation(z1).json", false);
 xmlhttp.send();
 
 /********************************Set data from JSON*************************************/
 //eventualmente può avere senso settare dei valori di default, per rendere visibile il modello, in modo che se , l'utente non inserisce nulla, vengano presi quelli. Altrimenti qui sotto si reinseriscono i valor scelti dall'utente.
+// questo però causa il problema che l'utente potrebbe non rendersi conto di non aver inserito dei parametri che andavano inseriti. 
+//buon compromesso può essere, dare un messaggio che avverta l'utente che non ha inserito uno o più dei parametri necessari al json, ma che il modello può comunque essere visualizzato con dei parametri di default 
+//in alternativa per far funzionare il tutto e basta, posso togliere la dichiarazione delle variabili sopra e dichiararle direttamente qui sotto e inizializzarle col valore  
 name= ANNOTATIONDATA.name;
 mdI= ANNOTATIONDATA.mdI;
 myurl= ANNOTATIONDATA.url;
@@ -66,23 +69,6 @@ for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
 }
 // fine hotspotdata
 
-/*
-$.getJSON('test.json', function (data, textStatus, jqXHR){
-    ANNOTATIONDATA=data;
-});
-
-/*    
-    $.get("test.json", function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
-      ANNOTATIONDATA = data;
-    });
-/*
-const Url = "test.json";
-$('#toolbar').ready(function(){
-	$.get(Url, function(data, status){
-		ANNOTATIONDATA = data;
-	});
-});*/
 // ATT /_\ l'errore json è dato dal fatto che l'estensione del file è json e non txt
 
 function actionsToolbar(action) {
@@ -121,15 +107,57 @@ function step(action){
 			my_pos[3]+=0.1;
 			presenter.animateToTrackballPosition(my_pos);
 			break;
-/*		case 'move_right' : 
-			my_pos[2]-=0.1;
-			presenter.animateToTrackballPosition(my_pos);
+		// Math.sin(); Math.cos();	
+		case 'move_right' : 
+			if(my_pos[0] == 0){
+				my_pos[2]-=0.1;
+				presenter.animateToTrackballPosition(my_pos);
+			}
+			else{
+			/*	my_pos[2]-=0.1 * Math.cos(my_pos[0]);				
+				my_pos[4]-=0.1 * Math.sin(my_pos[0]);
+				presenter.animateToTrackballPosition(my_pos);
+			*/
+
+				var gr = Math.PI * my_pos[0] / 180 ; // da gradi a radianti
+				my_pos[2]-= 0.1 *  Math.cos(gr);
+				my_pos[4]+= 0.1 * Math.sin(gr);
+
+				presenter.animateToTrackballPosition(my_pos);
+			}
 			break;
-		case 'move_left' :	
-			my_pos[2]+=0.1;
-			presenter.animateToTrackballPosition(my_pos);
+		case 'move_left' :
+			if(my_pos[0] == 0){
+				my_pos[2]+=0.1;
+				presenter.animateToTrackballPosition(my_pos);
+			}
+			else{
+				// prendo la mia misura, che dovrebbe essere in gradi e la trasformo in radianti. 
+				// calcolo seno e coseno di rotH e li moltiplico per quanto volgio muovermi, poi assegno i valori 
+				/*var gr = Math.PI * my_pos[0] / 180 ; // da gradi a radianti
+				var v2 = Math.cos(gr) *0.1 ;
+				var v4 = Math.sin(gr) *0.1 ;
+				var rg2 = 180 * v2 / Math.PI ; // da radianti a gradi
+				var rg4 = 180 * v4 / Math.PI ; // da radianti a gradi
+
+				my_pos[2]+= rg2;				
+				my_pos[4]+= rg4;
+				*/
+				//my_pos[2]+= 0.1 * Math.cos(my_pos[0]);				
+				//my_pos[4]+= 0.1 * Math.sin(my_pos[0]);
+
+				//Maaaahhh al momento questa sembra la versione migliore, funziona, non benissimo 
+				// agli estremi  <-- --> comincia es. ad avicinarsi 
+				// se fazzio zoom e mi muovo o muov il modello dopo che mi sono spostatoa destra e a sinistra, fa cose che un utente non si aspetta faccia 
+
+				var gr = Math.PI * my_pos[0] / 180 ; // da gradi a radianti
+				my_pos[2]+= 0.1 *  Math.cos(gr);
+				my_pos[4]-= 0.1 * Math.sin(gr);
+
+				presenter.animateToTrackballPosition(my_pos);
+			}
 			break;
-*/	
+	
 	}
 }
 // end menager of arrows movement
@@ -289,8 +317,17 @@ function convertToLocal(state)
 	newstate[3] = (state[3] - presenter.sceneCenter[1]) * presenter.sceneRadiusInv;
 	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
 	//distance
-	newstate[5] = state[5] * presenter.sceneRadiusInv-0.8; // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
-	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.8, in modo da far diventare il tutto 1.20; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
+	//(state[5] * presenter.sceneRadiusInv)-(0.9* presenter.sceneRadiusInv);
+	if ((state[5] * presenter.sceneRadiusInv - 0.9) == 1.10 ) {
+		newstate[5] = state[5] * presenter.sceneRadiusInv - 0.9;
+	}else {
+		newstate[5] = (state[5] - (0.9 / presenter.sceneRadiusInv)) * presenter.sceneRadiusInv; // serve a riadattare lo zoom della croce con le impostazioni da me messe qui (rispetto a quelle di SPOTMAKER)
+		if (newstate[5] < 0) {
+			newstate[5] *= -1; //serve ad esvitare valori negativi, così quando zommo molto sembra andare 
+		}
+	}
+	//newstate[5] = state[5] * presenter.sceneRadiusInv;/*start;/*state[5] * presenter.sceneRadiusInv-0.9;*/ // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
+	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.9, in modo da far diventare il tutto 1.10; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
 }
 //********************************** 
 
@@ -372,21 +409,8 @@ var myScene;
 
 //*********************************************************************************************************************
 
-$(document).ready(function(){
-/*  STESSO PROBLEMA DI XML, PASSA I DATI MA NON CARICA IL MODELLO 'NON LI PASSA NEL MOMENTO GIUSTO'
-	$.ajax({
-		url: "uri_test.json",
-		dataType: 'json',
-		success: function(data) {
-		  ANNOTATIONDATA= data.uri;
-		  myurl = ANNOTATIONDATA;
-		},
-		error: function() {
-		  alert("error");
-		}
-	  });      
-*/  
-	//---------------------------------------------------------------------------------------------
+$(document).ready(function(){  
+
 	var lightControllerCanvas = document.getElementById("lightcontroller_canvas");
 	lightControllerCanvas.addEventListener("touchstart", click_lightcontroller, false);
 	lightControllerCanvas.addEventListener("mousedown", click_lightcontroller, false);
