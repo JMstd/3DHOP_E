@@ -89,7 +89,9 @@ function actionsToolbar(action) {
 		else if(action=='perspective' || action=='orthographic') { presenter.toggleCameraType(); cameraSwitch(); }
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
-		else if(action=='full' || action=='full_on') fullscreenSwitch();
+    	//else if(action=='screenshot') presenter.saveScreenshot(); 
+     else if (action== 'full_on') {fullscreenSwitch(); lightCtrL('full_on');}
+      else if (action== 'full') {fullscreenSwitch(); lightCtrL('full');}
 		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
 	}
 
@@ -165,6 +167,24 @@ function step(action){
 function log(msg) {
 	document.getElementById("log-text").innerHTML += msg + "\n";
 	document.getElementById("log-text").scrollTop = document.getElementById("log-text").scrollHeight; 
+}
+
+function lightCtrL(status) {
+
+//{position:relative;right:-500%;}
+   if(status == 'full_on'){
+
+//   		alert("piccolo");
+//    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 250));
+    	$('#lightcontroller').css('left', + 25);
+    	$('#lightcontroller').css('left', + 25);
+   }
+   else{
+
+		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top * 50));
+		$('#lightcontroller').css('left', ($('#light').position().left + $('\#toolbar').position().left * 140));
+
+	}
 }
 
 function lightSwitchL(status) {
@@ -318,7 +338,7 @@ function convertToLocal(state)
 	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
 	//distance
 	//(state[5] * presenter.sceneRadiusInv)-(0.9* presenter.sceneRadiusInv);
-	if ((state[5] * presenter.sceneRadiusInv - 0.9) == 1.10 ) {
+/*	if ((state[5] * presenter.sceneRadiusInv - 0.9) == 1.10 ) {
 		newstate[5] = state[5] * presenter.sceneRadiusInv - 0.9;
 	}else {
 		newstate[5] = (state[5] - (0.9 / presenter.sceneRadiusInv)) * presenter.sceneRadiusInv; // serve a riadattare lo zoom della croce con le impostazioni da me messe qui (rispetto a quelle di SPOTMAKER)
@@ -326,7 +346,7 @@ function convertToLocal(state)
 			newstate[5] *= -1; //serve ad esvitare valori negativi, così quando zommo molto sembra andare 
 		}
 	}
-	//newstate[5] = state[5] * presenter.sceneRadiusInv;/*start;/*state[5] * presenter.sceneRadiusInv-0.9;*/ // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
+*/	newstate[5] = state[5] * presenter.sceneRadiusInv;/*start;/*state[5] * presenter.sceneRadiusInv-0.9;*/ // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
 	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.9, in modo da far diventare il tutto 1.10; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
 }
 //********************************** 
