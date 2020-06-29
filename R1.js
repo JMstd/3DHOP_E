@@ -89,7 +89,7 @@ function actionsToolbar(action) {
 		else if(action=='perspective' || action=='orthographic') { presenter.toggleCameraType(); cameraSwitch(); }
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
-    	//else if(action=='screenshot') presenter.saveScreenshot(); 
+    	else if(action=='screenshot') presenter.saveScreenshot(); 
      else if (action== 'full_on') {fullscreenSwitch(); lightCtrL('full_on');}
       else if (action== 'full') {fullscreenSwitch(); lightCtrL('full');}
 		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
