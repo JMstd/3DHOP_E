@@ -266,7 +266,7 @@ function update_lightcontroller(xx,yy) {
 	context.beginPath();
 	context.arc(midpoint[0], midpoint[1], radius, 0, 2 * Math.PI, false);
 	var grd=context.createRadialGradient(midpoint[0]+(xx*radius*2),midpoint[1]+(yy*radius*2),5,midpoint[0], midpoint[1],radius);
-	grd.addColorStop(0,"yellow");
+	grd.addColorStop(0,"#f8f8f8");
 	grd.addColorStop(1,"black");
 	context.fillStyle = grd;
 	context.fill();
