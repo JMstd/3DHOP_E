@@ -90,8 +90,8 @@ function actionsToolbar(action) {
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
     	else if(action=='screenshot') presenter.saveScreenshot(); 
-     else if (action== 'full_on') {fullscreenSwitch(); lightCtrL('full_on');}
-      else if (action== 'full') {fullscreenSwitch(); lightCtrL('full');}
+     else if (action== 'full_on') {fullscreenSwitch(); /*lightCtrL('full_on');*/}
+      else if (action== 'full') {fullscreenSwitch(); /*lightCtrL('full');*/}
 		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
 	}
 
@@ -176,7 +176,7 @@ function lightCtrL(status) {
 
 //   		alert("piccolo");
 //    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 250));
-    	$('#lightcontroller').css('left', + 25);
+    	//$('#lightcontroller').css('left', + 25);   ripetizione inutile errore di copiatura
     	$('#lightcontroller').css('left', + 25);
    }
    else{
@@ -195,8 +195,8 @@ function lightSwitchL(status) {
 	    $('#lighting_off').css("visibility", "hidden");	//manage lighting combined interface
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
 
-		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 25));
-		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top - 25));
+		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 1600));
+		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top + 500));
 
 		presenter.enableSceneLighting('lighting_off');
 		lightingSwitch('lighting_off');
@@ -205,7 +205,7 @@ function lightSwitchL(status) {
     	$('#light_off').css("visibility", "hidden");
     	$('#light').css("visibility", "visible");
     	
-    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 250));
+    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 1850));
    }
 }
 

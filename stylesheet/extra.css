@@ -73,15 +73,17 @@ body {
 }
 .dawn{
 	transform: rotate(90deg);
-	margin-right: 9%;
-	margin-top: 3%;
+	margin-right: 3%;
+	margin-top: -3%;
 }
 .right{
-	margin-right: 5%;
+	margin-top: 3%;
+	margin-right: 3%;
 }
 .left{
 	transform: rotate(180deg);
-	margin-right: 15%;
+	margin-top: 3%;
+	margin-right: 9%;
 }
 
 /****************end move_control**********************/
