@@ -195,7 +195,7 @@ function lightSwitchL(status) {
 	    $('#lighting_off').css("visibility", "hidden");	//manage lighting combined interface
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
 
-		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 1600));
+		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 1650));
 		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top + 500));
 
 		presenter.enableSceneLighting('lighting_off');
@@ -205,7 +205,7 @@ function lightSwitchL(status) {
     	$('#light_off').css("visibility", "hidden");
     	$('#light').css("visibility", "visible");
     	
-    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 1850));
+    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 1900));
    }
 }
 
