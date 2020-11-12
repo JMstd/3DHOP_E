@@ -427,6 +427,49 @@ var myScene;
 	presenter._onEndMeasurement = onEndMeasure;
 }
 
+//************************************************* COMPASS (bussola) ********************************
+   // COMPASS
+    function onTrackballUpdate(trackState) {
+        updateCompass(sglDegToRad(trackState[0]), sglDegToRad(trackState[1]));
+    }
+    function updateCompass(angle, tilt) {
+        $('#compassCanvas').attr('width', 100);
+        $('#compassCanvas').attr('height', 100);
+        var canv = document.getElementById("compassCanvas");
+        var ctx = canv.getContext("2d");
+        var hh = canv.height;
+        var ww = canv.width;
+
+        ctx.clearRect(0, 0, canv.width, canv.height);
+        // Save the current drawing state
+        ctx.save();
+
+        // Now move across and down half the
+        ctx.translate(ww / 2.0, hh / 2.0);
+
+        // Rotate around this point
+        ctx.rotate(angle);
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 45, 0, 2 * Math.PI, false);
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#443377';
+        ctx.stroke();
+
+        ctx.font = "28px Verdana";
+        ctx.strokeStyle = '#ff4444';
+        ctx.strokeText("N", -10, -25);
+        ctx.strokeStyle = '#ffffff';
+        ctx.strokeText("S", -10, 45);
+        ctx.strokeText("E", 27, 10);
+        ctx.strokeText("W", -47, 10);
+
+        // Restore the previous drawing state
+        ctx.restore();
+    }
+
+//******************************************* fine COMPASS (bussola) ***********************************************************
+
 //*********************************************************************************************************************
 
 $(document).ready(function(){  
