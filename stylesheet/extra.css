@@ -52,14 +52,12 @@ body {
 
 /****************start move_control**********************/
 
-#movement_control {
-}
 .move_{
 	position: fixed;
 	right: 1%;
 	top:10%;
 	background-color:rgba(50, 50, 50, 0.5);
-	padding: 1.5%;
+	padding: 0.2%;
 	border:2px solid #f8f8f8; 
 	border-radius:10px;
 	box-shadow:1px 1px 10px #f8f8f8;
@@ -68,7 +66,7 @@ body {
 	
 .up{
 	transform: rotate(270deg);
-	margin-right: 9%;
+	margin-right: 6.5%;
 	margin-top: -3%;
 }
 .dawn{
@@ -77,13 +75,13 @@ body {
 	margin-top: -3%;
 }
 .right{
-	margin-top: 3%;
+	margin-top: 0.5%;
 	margin-right: 3%;
 }
 .left{
 	transform: rotate(180deg);
-	margin-top: 3%;
-	margin-right: 9%;
+	margin-top: 0.5%;
+	margin-right: 6.5%;
 }
 
 /****************end move_control**********************/
