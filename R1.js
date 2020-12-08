@@ -196,7 +196,7 @@ function lightSwitchL(status) {
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
 
 		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 1650));
-		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top + 500));
+		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top + 550));
 
 		presenter.enableSceneLighting('lighting_off');
 		lightingSwitch('lighting_off');
