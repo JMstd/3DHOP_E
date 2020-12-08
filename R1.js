@@ -33,7 +33,7 @@ xmlhttp.onreadystatechange = function() {
     HOTSPOTSDATA= myObj;
   }
 };
-xmlhttp.open("GET", "annotation(z1).json", false);
+xmlhttp.open("GET", "coord_testf.json", false);
 xmlhttp.send();
 
 /********************************Set data from JSON*************************************/
@@ -150,7 +150,7 @@ function step(action){
 
 				//Maaaahhh al momento questa sembra la versione migliore, funziona, non benissimo 
 				// agli estremi  <-- --> comincia es. ad avicinarsi 
-				// se fazzio zoom e mi muovo o muov il modello dopo che mi sono spostatoa destra e a sinistra, fa cose che un utente non si aspetta faccia 
+				// se faccio zoom e mi muovo o muov il modello dopo che mi sono spostatoa destra e a sinistra, fa cose che un utente non si aspetta faccia 
 
 				var gr = Math.PI * my_pos[0] / 180 ; // da gradi a radianti
 				my_pos[2]+= 0.1 *  Math.cos(gr);
@@ -310,9 +310,13 @@ HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 // end lightControler functions ************************************************************************************************************
 
 // ****************************** convertTOGlobal/Local prese da SPOTMAKER, per trasformare le coordinate da locali a globali. Da usare per muovere il modello 
-// ****************************** quando si clicca sul hotspot  
-function convertToGlobal(state)
-{
+// ****************************** quando si clicca sul hotspot 
+function hotspotAdapt(my_distance, new_distance){
+	return my_distance/new_distance;
+}
+
+function convertToGlobal(state){
+	
 	var newstate=[];
 	// angles
 	newstate[0] = state[0];
@@ -325,8 +329,39 @@ function convertToGlobal(state)
 	newstate[5] = state[5] / presenter.sceneRadiusInv;
 	return newstate;
 }
-function convertToLocal(state)
-{
+function convertToLocal(state){
+
+	var newstate=[];
+	// angles
+	newstate[0] = state[0];
+	newstate[1] = state[1];
+	// pan
+
+	newstate[2] = (state[2] - presenter.sceneCenter[0]) * presenter.sceneRadiusInv;
+	newstate[3] = (state[3] - presenter.sceneCenter[1]) * presenter.sceneRadiusInv;
+	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
+	//distance
+	//(state[5] * presenter.sceneRadiusInv)-(0.9* presenter.sceneRadiusInv);
+/*	if ((state[5] * presenter.sceneRadiusInv - 0.9) == 1.10 ) {
+		newstate[5] = state[5] * presenter.sceneRadiusInv - 0.9;
+	}else {
+		newstate[5] = (state[5] - (0.9 / presenter.sceneRadiusInv)) * presenter.sceneRadiusInv; // serve a riadattare lo zoom della croce con le impostazioni da me messe qui (rispetto a quelle di SPOTMAKER)
+		if (newstate[5] < 0) {
+			newstate[5] *= -1; //serve ad esvitare valori negativi, così quando zommo molto sembra andare 
+		}
+	}
+*/	
+	if (state[5] * presenter.sceneRadiusInv == 2 ){
+		newstate[5] = 1.1;
+	}
+	else{
+		newstate[5] = state[5] * presenter.sceneRadiusInv;/*start;/*state[5] * presenter.sceneRadiusInv-0.9;*/ // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
+	}
+	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.9, in modo da far diventare il tutto 1.10; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
+}
+
+function convertToLocal_or(state){
+
 	var newstate=[];
 	// angles
 	newstate[0] = state[0];
