@@ -16,10 +16,10 @@ var HOTSPOTSDATA ={};
 
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    var myObj = JSON.parse(this.responseText);
-    ANNOTATIONDATA= myObj;
-  }
+	if (this.readyState == 4 && this.status == 200) {
+		var myObj = JSON.parse(this.responseText);
+		ANNOTATIONDATA= myObj;
+	}
 };
 xmlhttp.open("GET", "test.json", false);
 xmlhttp.send();
@@ -28,10 +28,10 @@ xmlhttp.send();
 
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    var myObj = JSON.parse(this.responseText);
-    HOTSPOTSDATA= myObj;
-  }
+	if (this.readyState == 4 && this.status == 200) {
+		var myObj = JSON.parse(this.responseText);
+		HOTSPOTSDATA= myObj;
+	}
 };
 xmlhttp.open("GET", "coord_testf.json", false);
 xmlhttp.send();
@@ -61,9 +61,9 @@ for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
 		color     : [ 0.0, 0.25, 1.0 ],
 		transform : { 
 			matrix:
-				SglMat4.mul(SglMat4.translation(pos), 
+			SglMat4.mul(SglMat4.translation(pos), 
 				SglMat4.scaling([radius, radius, radius]))
-			},
+		},
 	};
 	cont[HOTSPOTSDATA.annotations[ii].name] = newSpot;
 }
@@ -73,27 +73,27 @@ for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
 
 function actionsToolbar(action) {
 	if(action=='home') presenter.resetTrackball();
-		else if(action=='zoomin') presenter.zoomIn();
-		else if(action=='zoomout') presenter.zoomOut();
-		else if(action=='lighting' || action=='lighting_off') {
-			if (action=='lighting'){
-				lightSwitchL('light_off');
-			}
-			presenter.enableSceneLighting(!presenter.isSceneLightingEnabled()); lightingSwitch();
+	else if(action=='zoomin') presenter.zoomIn();
+	else if(action=='zoomout') presenter.zoomOut();
+	else if(action=='lighting' || action=='lighting_off') {
+		if (action=='lighting'){
+			lightSwitchL('light_off');
 		}
-		else if(action=='light') lightSwitchL('light');
-		else if(action=='light_off') lightSwitchL('light_off');		
+		presenter.enableSceneLighting(!presenter.isSceneLightingEnabled()); lightingSwitch();
+	}
+	else if(action=='light') lightSwitchL('light');
+	else if(action=='light_off') lightSwitchL('light_off');		
 		//--COLOR--	
-			else if(action=='color' || action=='color_on') { presenter.toggleInstanceSolidColor(HOP_ALL, true); colorSwitch(); } 
+		else if(action=='color' || action=='color_on') { presenter.toggleInstanceSolidColor(HOP_ALL, true); colorSwitch(); } 
 		//--COLOR--	
 		else if(action=='perspective' || action=='orthographic') { presenter.toggleCameraType(); cameraSwitch(); }
 		else if(action=='hotspot'|| action=='hotspot_on') { presenter.toggleSpotVisibility(HOP_ALL, true); presenter.enableOnHover(!presenter.isOnHoverEnabled()); hotspotSwitch(); }
 		else if(action=='measure' || action=='measure_on') { presenter.enableMeasurementTool(!presenter.isMeasurementToolEnabled()); measureSwitch(); } 
-    	else if(action=='screenshot') presenter.saveScreenshot(); 
-     else if (action== 'full_on') {fullscreenSwitch(); /*lightCtrL('full_on');*/}
-      else if (action== 'full') {fullscreenSwitch(); /*lightCtrL('full');*/}
-		else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
-	}
+		else if(action=='screenshot') presenter.saveScreenshot(); 
+	else if (action== 'full_on') {fullscreenSwitch(); /*lightCtrL('full_on');*/}
+else if (action== 'full') {fullscreenSwitch(); /*lightCtrL('full');*/}
+else if(action=='move_up' || 'move_dawn' || 'move_right' || 'move_left') step(action);
+}
 
 // start menager of arrows movement
 function step(action){
@@ -102,24 +102,24 @@ function step(action){
 
 	switch(action) {
 		case 'move_up'   : 	
-			my_pos[3]-=0.1;
-			presenter.animateToTrackballPosition(my_pos);
-			break;
+		my_pos[3]-=0.1;
+		presenter.animateToTrackballPosition(my_pos);
+		break;
 		case 'move_dawn' :
-			my_pos[3]+=0.1;
-			presenter.animateToTrackballPosition(my_pos);
-			break;
+		my_pos[3]+=0.1;
+		presenter.animateToTrackballPosition(my_pos);
+		break;
 		// Math.sin(); Math.cos();	
 		case 'move_right' : 
-			if(my_pos[0] == 0){
-				my_pos[2]-=0.1;
-				presenter.animateToTrackballPosition(my_pos);
-			}
-			else{
+		if(my_pos[0] == 0){
+			my_pos[2]-=0.1;
+			presenter.animateToTrackballPosition(my_pos);
+		}
+		else{
 			/*	my_pos[2]-=0.1 * Math.cos(my_pos[0]);				
 				my_pos[4]-=0.1 * Math.sin(my_pos[0]);
 				presenter.animateToTrackballPosition(my_pos);
-			*/
+				*/
 
 				var gr = Math.PI * my_pos[0] / 180 ; // da gradi a radianti
 				my_pos[2]-= 0.1 *  Math.cos(gr);
@@ -128,7 +128,7 @@ function step(action){
 				presenter.animateToTrackballPosition(my_pos);
 			}
 			break;
-		case 'move_left' :
+			case 'move_left' :
 			if(my_pos[0] == 0){
 				my_pos[2]+=0.1;
 				presenter.animateToTrackballPosition(my_pos);
@@ -159,9 +159,9 @@ function step(action){
 				presenter.animateToTrackballPosition(my_pos);
 			}
 			break;
-	
+			
+		}
 	}
-}
 // end menager of arrows movement
 
 function log(msg) {
@@ -172,41 +172,41 @@ function log(msg) {
 function lightCtrL(status) {
 
 //{position:relative;right:-500%;}
-   if(status == 'full_on'){
+if(status == 'full_on'){
 
 //   		alert("piccolo");
 //    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 250));
     	//$('#lightcontroller').css('left', + 25);   ripetizione inutile errore di copiatura
     	$('#lightcontroller').css('left', + 25);
-   }
-   else{
+    }
+    else{
 
-		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top * 50));
-		$('#lightcontroller').css('left', ($('#light').position().left + $('\#toolbar').position().left * 140));
+    	$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top * 50));
+    	$('#lightcontroller').css('left', ($('#light').position().left + $('\#toolbar').position().left * 140));
 
-	}
+    }
 }
 
 function lightSwitchL(status) {
 
 	if(status == 'light'){
 		$('#light').css("visibility", "hidden");
-	    $('#light_off').css("visibility", "visible");
+		$('#light_off').css("visibility", "visible");
 	    $('#lighting_off').css("visibility", "hidden");	//manage lighting combined interface
 	    $('#lighting').css("visibility", "visible");	//manage lighting combined interface
 
-		$('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 1650));
-		$('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top + 550));
+	    $('#lightcontroller').css('left', ($('#light').position().left + $('#light').width() + $('#toolbar').position().left + 1650));
+	    $('#lightcontroller').css('top', ($('#light').position().top + $('#toolbar').position().top + 550));
 
-		presenter.enableSceneLighting('lighting_off');
-		lightingSwitch('lighting_off');
+	    presenter.enableSceneLighting('lighting_off');
+	    lightingSwitch('lighting_off');
 	}
 	else{
-    	$('#light_off').css("visibility", "hidden");
-    	$('#light').css("visibility", "visible");
-    	
-    	$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 1900));
-   }
+		$('#light_off').css("visibility", "hidden");
+		$('#light').css("visibility", "visible");
+		
+		$('#lightcontroller').css('left', ($('#lightcontroller').position().left - 1900));
+	}
 }
 
 // start lightController functions ---------------------------------------------------------------------------------------------
@@ -284,27 +284,27 @@ function update_lightcontroller(xx,yy) {
 }
 
 function relMouseCoords(event){
-    var totalOffsetX = 0;
-    var totalOffsetY = 0;
-    var canvasX = 0;
-    var canvasY = 0;
-    var pageX = 0;
-    var pageY = 0;
-    var currentElement = this;
+	var totalOffsetX = 0;
+	var totalOffsetY = 0;
+	var canvasX = 0;
+	var canvasY = 0;
+	var pageX = 0;
+	var pageY = 0;
+	var currentElement = this;
 
-    do {
-        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-    }
-    while(currentElement = currentElement.offsetParent)
+	do {
+		totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+		totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+	}
+	while(currentElement = currentElement.offsetParent)
 
-    (event.touches) ? (pageX = event.touches[0].pageX) : (pageX = event.pageX);
-    (event.touches) ? (pageY = event.touches[0].pageY) : (pageY = event.pageY);
+		(event.touches) ? (pageX = event.touches[0].pageX) : (pageX = event.pageX);
+	(event.touches) ? (pageY = event.touches[0].pageY) : (pageY = event.pageY);
 
-    canvasX = pageX - totalOffsetX;
-    canvasY = pageY - totalOffsetY;
+	canvasX = pageX - totalOffsetX;
+	canvasY = pageY - totalOffsetY;
 
-    return {x:canvasX, y:canvasY}
+	return {x:canvasX, y:canvasY}
 }
 HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 // end lightControler functions ************************************************************************************************************
@@ -350,9 +350,9 @@ function convertToLocal(state){
 			newstate[5] *= -1; //serve ad esvitare valori negativi, così quando zommo molto sembra andare 
 		}
 	}
-*/	
+	*/	
 	if (state[5] * presenter.sceneRadiusInv == 2 ){
-		newstate[5] = 1.1;
+		newstate[5] = start;
 	}
 	else{
 		newstate[5] = state[5] * presenter.sceneRadiusInv;/*start;/*state[5] * presenter.sceneRadiusInv-0.9;*/ // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
@@ -360,6 +360,7 @@ function convertToLocal(state){
 	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.9, in modo da far diventare il tutto 1.10; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
 }
 
+//**************************************************************************************************************
 function convertToLocal_or(state){
 
 	var newstate=[];
@@ -372,29 +373,20 @@ function convertToLocal_or(state){
 	newstate[3] = (state[3] - presenter.sceneCenter[1]) * presenter.sceneRadiusInv;
 	newstate[4] = (state[4] - presenter.sceneCenter[2]) * presenter.sceneRadiusInv;
 	//distance
-	//(state[5] * presenter.sceneRadiusInv)-(0.9* presenter.sceneRadiusInv);
-/*	if ((state[5] * presenter.sceneRadiusInv - 0.9) == 1.10 ) {
-		newstate[5] = state[5] * presenter.sceneRadiusInv - 0.9;
-	}else {
-		newstate[5] = (state[5] - (0.9 / presenter.sceneRadiusInv)) * presenter.sceneRadiusInv; // serve a riadattare lo zoom della croce con le impostazioni da me messe qui (rispetto a quelle di SPOTMAKER)
-		if (newstate[5] < 0) {
-			newstate[5] *= -1; //serve ad esvitare valori negativi, così quando zommo molto sembra andare 
-		}
-	}
-*/	newstate[5] = state[5] * presenter.sceneRadiusInv;/*start;/*state[5] * presenter.sceneRadiusInv-0.9;*/ // 1.10 questo valore nel mio caso deve essere 1.10; poiché io ho impostato questa come start. cioé la distanza a cui sta il modello
-	return newstate;								//	la moltiplicazione viene 2. io sotraggo questo 0.9, in modo da far diventare il tutto 1.10; così il modello è leggrmente più lontano, ma rimane ad una distanza adeguata
+	newstate[5] = state[5] * presenter.sceneRadiusInv;
+	return newstate;
 }
-//********************************** 
+//**************************************************************************************************************
 
 //start hotspots f()
 function onPickedSpot(id) {
 //mi permette di prendere ed usare la posizione del json, una volta cliccato l'hotspot.
-	for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
-		var view = HOTSPOTSDATA.annotations[ii].view;
-		if (HOTSPOTSDATA.annotations[ii].name == id){
-			presenter.animateToTrackballPosition(convertToLocal(view));
-		};
-	}
+for (var ii = 0; ii < HOTSPOTSDATA.annotations.length; ii++){
+	var view = HOTSPOTSDATA.annotations[ii].view;
+	if (HOTSPOTSDATA.annotations[ii].name == id){
+		presenter.animateToTrackballPosition(convertToLocal(view));
+	};
+}
 }
 //end hotspots f
 
@@ -407,10 +399,10 @@ function onEndMeasure(measure) {
 var presenter = null;
 
 function setup3dhop() { 
-presenter = new Presenter("draw-canvas");
+	presenter = new Presenter("draw-canvas");
 
-var myScene;
-    myscene = {
+	var myScene;
+	myscene = {
 		meshes: {},
 		modelInstances : {},
 		spots : {},
@@ -419,63 +411,63 @@ var myScene;
 	};
 
 //*******************************************************inizio passaggio da xml *************************
-	myscene.meshes[name] = { url : myurl };
+myscene.meshes[name] = { url : myurl };
 	myscene.meshes[tipo_hs] = {url : url_hs}; // mi dichiara la Sphere //può avere senso aggiungere altri modelli, orendere questa parte più facilmente interagibile con l'utente; oppure con l'hotspot
 	myscene.modelInstances[mdI] = { mesh : name,						// in modo che capisca da solo quale forma usare (nell'eventualità di hotspot con fome differenti) (usa "type" da hotspots.json)
-									color: [-2.0, -2.0, -2.0]
-								};
-	myscene.spots = cont;
- 	myscene.trackball = { type : TurntablePanTrackball };
-	myscene.trackball.trackOptions = {
-										startPhi: 0.0,
-								        startTheta: 0.0,
-        								startDistance : start,
-								        minMaxPhi: [-180, 180],
-							 			minMaxTheta   : "["+stMinT+", "+stMaxT+"]",
-							 			minMaxDist    : "["+stMinD+", "+stMaxD+"]",
-										startPanX     : _PanX,
-										startPanY     : 0.0,
-										startPanZ     : 0.0,
-										minMaxPanX    : [-0.5, 0.5],
-										minMaxPanY    : [-0.6, 0.6],
-										minMaxPanZ    : [-0.3, 0.3]
-									};
+	color: [-2.0, -2.0, -2.0]
+};
+myscene.spots = cont;
+myscene.trackball = { type : TurntablePanTrackball };
+myscene.trackball.trackOptions = {
+	startPhi: 0.0,
+	startTheta: 0.0,
+	startDistance : start,
+	minMaxPhi: [-180, 180],
+	minMaxTheta   : "["+stMinT+", "+stMaxT+"]",
+	minMaxDist    : "["+stMinD+", "+stMaxD+"]",
+	startPanX     : _PanX,
+	startPanY     : 0.0,
+	startPanZ     : 0.0,
+	minMaxPanX    : [-0.5, 0.5],
+	minMaxPanY    : [-0.6, 0.6],
+	minMaxPanZ    : [-0.3, 0.3]
+};
 	myscene.space = {// tutta questa parte si puo mettere in xml, almeno la patrte con i parametri della camera secondo me vanno messi in xml
-						centerMode       : "scene",
-						radiusMode       : "scene",
-						cameraFOV        : 60.0,
-						cameraNearFar    : [0.01, 10.0],
-						cameraType       : "perspective",
-						sceneLighting    : true
-					};
+		centerMode       : "scene",
+		radiusMode       : "scene",
+		cameraFOV        : 60.0,
+		cameraNearFar    : [0.01, 10.0],
+		cameraType       : "perspective",
+		sceneLighting    : true
+	};
 //******************************************************fine passaggio da xml**************************
 
 //assegna i valori di myscene a presenter
-	presenter.setScene(myscene);
+presenter.setScene(myscene);
 
 /*inizio hotspots (il resto del codice aggiunto e' spots sopra)*/
-	presenter.setSpotVisibility(HOP_ALL, false, true);
+presenter.setSpotVisibility(HOP_ALL, false, true);
 
-	presenter._onPickedSpot = onPickedSpot;
+presenter._onPickedSpot = onPickedSpot;
 /*fine hotspots*/
 
-	presenter._onEndMeasurement = onEndMeasure;
+presenter._onEndMeasurement = onEndMeasure;
 }
 
 //************************************************* COMPASS (bussola) ********************************
    // COMPASS
-    function onTrackballUpdate(trackState) {
-        updateCompass(sglDegToRad(trackState[0]), sglDegToRad(trackState[1]));
-    }
-    function updateCompass(angle, tilt) {
-        $('#compassCanvas').attr('width', 100);
-        $('#compassCanvas').attr('height', 100);
-        var canv = document.getElementById("compassCanvas");
-        var ctx = canv.getContext("2d");
-        var hh = canv.height;
-        var ww = canv.width;
+   function onTrackballUpdate(trackState) {
+   	updateCompass(sglDegToRad(trackState[0]), sglDegToRad(trackState[1]));
+   }
+   function updateCompass(angle, tilt) {
+   	$('#compassCanvas').attr('width', 100);
+   	$('#compassCanvas').attr('height', 100);
+   	var canv = document.getElementById("compassCanvas");
+   	var ctx = canv.getContext("2d");
+   	var hh = canv.height;
+   	var ww = canv.width;
 
-        ctx.clearRect(0, 0, canv.width, canv.height);
+   	ctx.clearRect(0, 0, canv.width, canv.height);
         // Save the current drawing state
         ctx.save();
 
@@ -523,14 +515,14 @@ $(document).ready(function(){
 		lightControllerCanvas.removeEventListener("touchmove", drag_lightcontroller, false);
 	}, false);
 //*******************************************************************
-	update_lightcontroller(-0.17,-0.17);	
+update_lightcontroller(-0.17,-0.17);	
 //---------------------------------------------------------------------------------------------
-	
-	init3dhop();
-	setup3dhop();
 
-		$('#move_right').css("opacity", "0.2");
-		$('#move_left').css("opacity", "0.2");
+init3dhop();
+setup3dhop();
+
+$('#move_right').css("opacity", "0.2");
+$('#move_left').css("opacity", "0.2");
 });
 // onload occurs when all content has been loaded 
 //window.onload = setup3dhop;
